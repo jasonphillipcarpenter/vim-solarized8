@@ -1,26 +1,42 @@
 ; vim: ft=colortemplate fdm=marker
 ; Filetype specific highlight groups
 #if get(g:, '@optionprefix_extra_hi_groups', 1)
-; vim {{{
-vimVar            -> Identifier
-vimFunc           -> Function
-vimUserFunc       -> Function
-helpSpecial       -> Special
-vimCommentString     violet            none
-vimCommand           yellow            none
-vimCmdSep            blue              none              bold
-helpExample          base1             none
-helpOption           cyan              none
-helpNote             magenta           none
-helpVim              magenta           none
-helpHyperTextJump    blue              none
-helpHyperTextEntry   green             none
-vimIsCommand         base00            none
-vimSynMtchOpt        yellow            none
-vimSynType           cyan              none
-vimHiLink            blue              none
-vimHiGroup           blue              none
-vimGroup             blue              none              bold
+; ale {{{
+#if get(g:, '@optionprefix_statusline', '') ==# 'flat'
+    ALEErrorSign               red         none              bold
+    ALEInfoSign                cyan        none              bold
+    ALEWarningSign             yellow      none              bold
+    ALEErrorSignLineNr         red         none
+    ALEInfoSignLineNr          cyan        none
+    ALEWarningSignLineNr       yellow      none
+#else
+    #if get(g:, 'ale_sign_highlight_linenrs', '') ==# 1
+        ALEErrorSign               base02      red               bold
+        ALEInfoSign                base02      cyan              bold
+        ALEWarningSign             base02      yellow            bold
+    #else
+        ALEErrorSign               red         base02            bold
+        ALEInfoSign                cyan        base02            bold
+        ALEWarningSign             yellow      base02            bold
+    #endif
+    ALEErrorSignLineNr         base02      red
+    ALEInfoSignLineNr          base02      cyan
+    ALEWarningSignLineNr       base02      yellow
+#endif
+
+ALEError                       red         none              undercurl  guisp=red
+ALEErrorLine                   none        none
+ALEInfo                        cyan        none              undercurl  guisp=cyan
+ALEInfoLine                    none        none
+ALEWarning                     yellow      none              undercurl  guisp=yellow
+ALEWarningLine                 none        none
+
+ALEStyleError               -> ALEError
+ALEStyleErrorSign           -> ALEErrorSign
+ALEStyleErrorSignLineNr     -> ALEErrorSignLineNr
+ALEStyleWarning             -> ALEWarning
+ALEStyleWarningSign         -> ALEWarningSign
+ALEStyleWarningSignLineNr   -> ALEWarningSignLineNr
 ; }}}
 ; diff {{{
 diffAdded         -> Statement
@@ -46,34 +62,6 @@ gitcommitFile              base0           none              bold
 gitcommitDiscardedArrow -> gitcommitDiscardedFile
 gitcommitSelectedArrow  -> gitcommitSelectedFile
 gitcommitUnmergedArrow  -> gitcommitUnmergedFile
-; }}}
-; html {{{
-htmlTag                    base01          none
-htmlEndTag                 base01          none
-htmlTagN                   base1           none              bold
-htmlTagName                blue            none              bold
-htmlSpecialTagName         blue            none              italic
-htmlArg                    base00          none
-javaScript                 yellow          none
-; }}}
-; javascript {{{
-jsFuncCall              -> Function
-; }}}
-; perl {{{
-perlHereDoc                base1           none
-perlVarPlain               yellow          none
-perlStatementFileDesc      cyan            none
-; }}}
-; tex {{{
-texstatement               cyan            none
-texmathzonex               yellow          none
-texmathmatcher             yellow          none
-texreflabel                yellow          none
-; }}}
-; ruby {{{
-rubyDefine                 base1           none              bold
-rubySymbol              -> Type
-rubyBoolean                magenta         none
 ; }}}
 ; haskell {{{
 ; For use with syntax/haskell.vim : Haskell Syntax File
@@ -108,6 +96,18 @@ hsNiceOperator             cyan            none
 hsniceoperator             cyan            none
 #let hs_highlight_boolean=1
 #let hs_highlight_delimiters=1
+; }}}
+; html {{{
+htmlTag                    base01          none
+htmlEndTag                 base01          none
+htmlTagN                   base1           none              bold
+htmlTagName                blue            none              bold
+htmlSpecialTagName         blue            none              italic
+htmlArg                    base00          none
+javaScript                 yellow          none
+; }}}
+; javascript {{{
+jsFuncCall              -> Function
 ; }}}
 ; pandoc {{{
 pandocTitleBlock                       blue               none
@@ -212,41 +212,41 @@ pandocMetadataKey                      blue               none
 pandocMetadata                         blue               none           bold
 pandocMetadataTitle                 -> pandocMetadata
 ; }}}
-; ale {{{
-#if get(g:, '@optionprefix_statusline', '') ==# 'flat'
-    ALEErrorSign               red         none              bold
-    ALEInfoSign                cyan        none              bold
-    ALEWarningSign             yellow      none              bold
-    ALEErrorSignLineNr         red         none
-    ALEInfoSignLineNr          cyan        none
-    ALEWarningSignLineNr       yellow      none
-#else
-    #if get(g:, 'ale_sign_highlight_linenrs', '') ==# 1
-        ALEErrorSign               base02      red               bold
-        ALEInfoSign                base02      cyan              bold
-        ALEWarningSign             base02      yellow            bold
-    #else
-        ALEErrorSign               red         base02            bold
-        ALEInfoSign                cyan        base02            bold
-        ALEWarningSign             yellow      base02            bold
-    #endif
-    ALEErrorSignLineNr         base02      red
-    ALEInfoSignLineNr          base02      cyan
-    ALEWarningSignLineNr       base02      yellow
-#endif
-
-ALEError                       red         none              undercurl  guisp=red
-ALEErrorLine                   none        none
-ALEInfo                        cyan        none              undercurl  guisp=cyan
-ALEInfoLine                    none        none
-ALEWarning                     yellow      none              undercurl  guisp=yellow
-ALEWarningLine                 none        none
-
-ALEStyleError               -> ALEError
-ALEStyleErrorSign           -> ALEErrorSign
-ALEStyleErrorSignLineNr     -> ALEErrorSignLineNr
-ALEStyleWarning             -> ALEWarning
-ALEStyleWarningSign         -> ALEWarningSign
-ALEStyleWarningSignLineNr   -> ALEWarningSignLineNr
+; perl {{{
+perlHereDoc                base1           none
+perlVarPlain               yellow          none
+perlStatementFileDesc      cyan            none
+; }}}
+; ruby {{{
+rubyDefine                 base1           none              bold
+rubySymbol              -> Type
+rubyBoolean                magenta         none
+; }}}
+; tex {{{
+texstatement               cyan            none
+texmathzonex               yellow          none
+texmathmatcher             yellow          none
+texreflabel                yellow          none
+; }}}
+; vim {{{
+vimVar            -> Identifier
+vimFunc           -> Function
+vimUserFunc       -> Function
+helpSpecial       -> Special
+vimCommentString     violet            none
+vimCommand           yellow            none
+vimCmdSep            blue              none              bold
+helpExample          base1             none
+helpOption           cyan              none
+helpNote             magenta           none
+helpVim              magenta           none
+helpHyperTextJump    blue              none
+helpHyperTextEntry   green             none
+vimIsCommand         base00            none
+vimSynMtchOpt        yellow            none
+vimSynType           cyan              none
+vimHiLink            blue              none
+vimHiGroup           blue              none
+vimGroup             blue              none              bold
 ; }}}
 #endif
